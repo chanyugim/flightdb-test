@@ -1,0 +1,535 @@
+.booking-hero {
+  background: var(--navy);
+  color: white;
+  padding: 32px 0 28px;
+}
+.booking-hero .container,
+.container.booking-page {
+  max-width: 1280px;
+}
+.booking-hero h1 {
+  font-size: 28px;
+  margin: 6px 0 20px;
+}
+.booking-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #c6d5e3;
+  font-size: 13px;
+}
+.booking-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.booking-steps span {
+  font-size: 12px;
+  border-bottom: 2px solid #64839a;
+  padding: 3px;
+}
+.booking-steps [aria-current="step"] {
+  color: white;
+  font-weight: 700;
+}
+.booking-steps [aria-current="step"] span {
+  border-color: var(--teal);
+  color: #8bdddf;
+}
+.container.booking-page {
+  padding-top: 32px;
+  padding-bottom: 100px;
+}
+.booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: start;
+}
+.booking-sheet {
+  background: white;
+  padding: 28px 32px;
+  border-top: 3px solid var(--navy);
+  min-width: 0;
+}
+.booking-section + .booking-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.booking-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.booking-section-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.booking-section-heading p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.booking-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.booking-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 0;
+}
+.booking-fields input,
+.booking-fields select {
+  border-radius: 3px;
+  min-height: 44px;
+  color: var(--text);
+}
+.booking-passenger {
+  padding: 18px 0 18px 16px;
+  border-left: 3px solid var(--teal-soft);
+}
+.booking-passenger + .booking-passenger {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.booking-passenger-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.booking-passenger-head h3 {
+  margin: 0 0 4px;
+}
+.booking-copy {
+  font-size: 12px;
+  color: var(--teal-dark);
+  border-radius: 3px;
+}
+.booking-copy-notice {
+  font-size: 13px;
+  color: var(--teal-dark);
+}
+.booking-points {
+  display: flex;
+  gap: 8px;
+}
+.booking-points input {
+  min-width: 0;
+  flex: 1;
+}
+.booking-points button {
+  flex-shrink: 0;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.booking-summary {
+  position: sticky;
+  top: 20px;
+  background: white;
+  min-width: 0;
+}
+.booking-summary-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  background: var(--navy);
+  color: white;
+}
+.booking-summary-title span {
+  font-size: 13px;
+  color: #c6d5e3;
+}
+.booking-summary-body {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-top: 0;
+}
+.booking-leg {
+  padding-bottom: 18px;
+}
+.booking-leg + .booking-leg {
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+.booking-leg h3 {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 12px;
+  color: var(--teal-dark);
+}
+.booking-leg h3 span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.booking-route-codes {
+  font-size: 26px;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+}
+.booking-route-codes span {
+  font-weight: 400;
+  color: var(--teal-dark);
+  padding: 0 12px;
+}
+.booking-leg p {
+  font-size: 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.booking-leg dl {
+  margin: 0;
+  font-size: 12px;
+}
+.booking-leg dl div {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+.booking-leg dt {
+  color: var(--muted);
+}
+.booking-leg dd {
+  margin: 0;
+}
+.booking-price-breakdown {
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 16px;
+  font-size: 13px;
+}
+.booking-price-breakdown .summary-line {
+  gap: 8px;
+}
+.booking-price-breakdown .summary-total {
+  align-items: center;
+  font-size: 14px;
+}
+.booking-price-breakdown .summary-total strong {
+  font-size: 22px;
+  color: var(--navy);
+}
+.booking-summary .btn-primary {
+  min-height: 48px;
+  border-radius: 3px;
+}
+.seat-flight-info {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+}
+.seat-legend {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.seat-legend .available {
+  background: white;
+}
+.seat-legend .selected {
+  background: var(--teal);
+}
+.seat-legend .assigned {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+.seat-legend .unavailable {
+  background: #e3e5ea;
+}
+.seat-selection-page .seat-map > section {
+  background: #f7f8fb;
+  padding: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+}
+.seat-selection-page .seat-map h3 {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+.seat-selection-page .seat-row {
+  min-width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.seat-selection-page .seat,
+.seat-selection-page .row-no,
+.seat-selection-page .aisle {
+  flex-shrink: 0;
+}
+.seat-selection-status {
+  margin-top: 0;
+  font-size: 14px;
+}
+.selected-seat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.selected-seat-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.selected-seat-list li span:last-child {
+  margin-left: auto;
+  color: var(--muted);
+}
+.selected-seat-list li:last-child {
+  border-bottom: 0;
+}
+.seat-passenger-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.seat-passenger-count select {
+  width: 100px;
+}
+.seat-selection-actions {
+  display: grid;
+  gap: 8px;
+}
+.seat-selection-actions button {
+  border-radius: 3px;
+  min-height: 44px;
+}
+.seat-selection-page .passenger-choice {
+  border-radius: 3px;
+}
+.seat-class-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-top: 24px;
+}
+.seat-class-tabs button {
+  flex: 1;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: 12px 6px;
+  background: transparent;
+}
+.seat-class-tabs button[aria-selected="true"] {
+  color: var(--teal-dark);
+  border-bottom-color: var(--teal);
+  background: var(--teal-soft);
+}
+.seat-class-tabs span {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.booking-expand,
+.booking-mobile-total {
+  display: none;
+}
+.booking-panel-actions {
+  padding: 0 22px 22px;
+  border: 1px solid var(--border);
+  border-top: 0;
+}
+.booking-dock .booking-summary-body {
+  border-bottom: 0;
+}
+.booking-dock .booking-summary-title {
+  gap: 12px;
+}
+.booking-dock .booking-summary-title strong {
+  margin-left: auto;
+}
+.confirmed-passengers {
+  padding: 0;
+  list-style: none;
+}
+.confirmed-passengers li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  gap: 20px;
+}
+.confirmed-passengers li div:last-child {
+  text-align: right;
+}
+.confirmed-passengers span {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+.reservation-contact {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.reservation-contact dt {
+  color: var(--muted);
+  font-size: 13px;
+}
+.reservation-contact dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+.reservation-number {
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+.reservation-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+@media (max-width: 960px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+  .booking-summary {
+    position: static;
+  }
+  .booking-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    max-height: 80dvh;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 24px #05203c25;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .booking-dock .booking-summary-title {
+    padding: 10px 16px;
+    border-radius: 12px 12px 0 0;
+    flex-shrink: 0;
+  }
+  .booking-expand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: transparent;
+    border-color: #ffffff50;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+  .booking-panel-details {
+    display: none;
+    overflow-y: auto;
+    min-height: 0;
+    overscroll-behavior: contain;
+  }
+  .booking-dock.expanded .booking-panel-details {
+    display: block;
+  }
+  .booking-panel-actions {
+    padding: 10px 16px 12px;
+    border: 0;
+    flex-shrink: 0;
+  }
+  .booking-mobile-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .booking-panel-details .booking-repeated-total {
+    display: none;
+  }
+  .booking-mobile-total strong {
+    font-size: 20px;
+  }
+  .booking-panel-actions .error {
+    max-height: 64px;
+    overflow-y: auto;
+    margin: 0 0 8px;
+  }
+  body:has(.booking-dock) .site-footer {
+    padding-bottom: calc(210px + env(safe-area-inset-bottom));
+  }
+  body:has(.booking-dock) .chat-launcher {
+    bottom: calc(185px + env(safe-area-inset-bottom));
+  }
+  body:has(.booking-dock.expanded) .chat-launcher {
+    visibility: hidden;
+  }
+}
+@media (max-width: 600px) {
+  .reservation-contact {
+    grid-template-columns: 1fr;
+  }
+  .seat-class-tabs button {
+    font-size: 13px;
+  }
+  .seat-flight-info .fc-times.flight-schedule {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 60px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .seat-flight-info .fc-duration {
+    min-width: 0;
+  }
+  .seat-selection-page .seat-map > section {
+    padding: 12px 4px;
+  }
+  .seat-selection-page .seat-row {
+    gap: 4px;
+  }
+  .seat-selection-page .seat {
+    width: 28px;
+    height: 36px;
+    font-size: 11px;
+  }
+  .seat-selection-page .aisle {
+    width: 12px;
+  }
+  .seat-selection-page .row-no {
+    width: 18px;
+  }
+  .booking-hero {
+    padding: 24px 0;
+  }
+  .booking-hero h1 {
+    font-size: 24px;
+  }
+  .booking-steps {
+    gap: 12px;
+    font-size: 11px;
+  }
+  .booking-sheet {
+    padding: 24px 18px;
+  }
+  .booking-fields {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .booking-section-heading h2 {
+    font-size: 18px;
+  }
+}

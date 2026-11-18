@@ -1,0 +1,5467 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "항공권 예매 서비스",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/db": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Db Health",
+        "operationId": "db_health_api_health_db_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register",
+        "operationId": "register_api_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chatbot/messages": {
+      "post": {
+        "tags": [
+          "chatbot"
+        ],
+        "summary": "Chat",
+        "operationId": "chat_api_chatbot_messages_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/airports": {
+      "get": {
+        "tags": [
+          "airports"
+        ],
+        "summary": "Get Airports",
+        "operationId": "get_airports_api_airports_get",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Keyword"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "selectable_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Selectable Only"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/airlines": {
+      "get": {
+        "tags": [
+          "airlines"
+        ],
+        "summary": "Get Airlines",
+        "operationId": "get_airlines_api_airlines_get",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Keyword"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirlineListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/grades": {
+      "get": {
+        "tags": [
+          "grades"
+        ],
+        "summary": "Get Grades",
+        "operationId": "get_grades_api_grades_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GradeResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Grades Api Grades Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/promotions": {
+      "get": {
+        "tags": [
+          "promotions"
+        ],
+        "summary": "Get Promotions",
+        "operationId": "get_promotions_api_promotions_get",
+        "parameters": [
+          {
+            "name": "active_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Active Only"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PromotionResponse"
+                  },
+                  "title": "Response Get Promotions Api Promotions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flights": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "summary": "Search Flights",
+        "operationId": "search_flights_api_flights_get",
+        "parameters": [
+          {
+            "name": "departure",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 4
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure"
+            }
+          },
+          {
+            "name": "arrival",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 4
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date"
+            }
+          },
+          {
+            "name": "airline",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 3
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Airline"
+            }
+          },
+          {
+            "name": "exclude_airlines",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Exclude Airlines"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "예정",
+                    "지연",
+                    "결항",
+                    "완료"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Price"
+            }
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Price"
+            }
+          },
+          {
+            "name": "seat_class",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "이코노미",
+                    "비즈니스",
+                    "퍼스트"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Seat Class"
+            }
+          },
+          {
+            "name": "departure_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure From"
+            }
+          },
+          {
+            "name": "departure_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure To"
+            }
+          },
+          {
+            "name": "arrival_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival From"
+            }
+          },
+          {
+            "name": "arrival_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival To"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "departure_at",
+                "arrival_at",
+                "price",
+                "departure_airport",
+                "arrival_airport"
+              ],
+              "type": "string",
+              "default": "departure_at",
+              "title": "Sort By"
+            }
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "default": "asc",
+              "title": "Sort Order"
+            }
+          },
+          {
+            "name": "bookable_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Bookable Only"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "include_airline_options",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Airline Options"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flights/round-trips": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "summary": "Search Round Trips",
+        "operationId": "search_round_trips_api_flights_round_trips_get",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Date"
+            }
+          },
+          {
+            "name": "return_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Date"
+            }
+          },
+          {
+            "name": "return_date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Date From"
+            }
+          },
+          {
+            "name": "return_date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Date To"
+            }
+          },
+          {
+            "name": "departure",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 4
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure"
+            }
+          },
+          {
+            "name": "arrival",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 4
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival"
+            }
+          },
+          {
+            "name": "airline",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 3
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Airline"
+            }
+          },
+          {
+            "name": "exclude_airlines",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Exclude Airlines"
+            }
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Price"
+            }
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Price"
+            }
+          },
+          {
+            "name": "seat_class",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "이코노미",
+                    "비즈니스",
+                    "퍼스트"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Seat Class"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "price",
+                "departure_at",
+                "arrival_at",
+                "return_departure_at"
+              ],
+              "type": "string",
+              "default": "price",
+              "title": "Sort By"
+            }
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "default": "asc",
+              "title": "Sort Order"
+            }
+          },
+          {
+            "name": "departure_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure From"
+            }
+          },
+          {
+            "name": "departure_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Departure To"
+            }
+          },
+          {
+            "name": "arrival_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival From"
+            }
+          },
+          {
+            "name": "arrival_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Arrival To"
+            }
+          },
+          {
+            "name": "return_departure_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Departure From"
+            }
+          },
+          {
+            "name": "return_departure_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Departure To"
+            }
+          },
+          {
+            "name": "return_arrival_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Arrival From"
+            }
+          },
+          {
+            "name": "return_arrival_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Return Arrival To"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "include_airline_options",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Airline Options"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoundTripListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flights/popular-routes": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "summary": "Get Popular Routes",
+        "operationId": "get_popular_routes_api_flights_popular_routes_get",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 365,
+              "minimum": 1,
+              "default": 30,
+              "title": "Days"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 5,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "rolling",
+                "month"
+              ],
+              "type": "string",
+              "default": "rolling",
+              "title": "Period"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteRecommendation"
+                  },
+                  "title": "Response Get Popular Routes Api Flights Popular Routes Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flights/{flight_id}": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "summary": "Get Flight",
+        "operationId": "get_flight_api_flights__flight_id__get",
+        "parameters": [
+          {
+            "name": "flight_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Flight Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/flights/{flight_id}/seats": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "summary": "Get Flight Seats",
+        "operationId": "get_flight_seats_api_flights__flight_id__seats_get",
+        "parameters": [
+          {
+            "name": "flight_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Flight Id"
+            }
+          },
+          {
+            "name": "available_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Available Only"
+            }
+          },
+          {
+            "name": "seat_class",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "이코노미",
+                    "비즈니스",
+                    "퍼스트"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Seat Class"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeatListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations": {
+      "post": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Create Reservation",
+        "operationId": "create_reservation_api_reservations_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 16,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationCreatedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations/round-trip": {
+      "post": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Create Round Trip Reservation",
+        "operationId": "create_round_trip_reservation_api_reservations_round_trip_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 16,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoundTripReservationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationCreatedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations/guest/lookup": {
+      "post": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Guest Lookup",
+        "operationId": "guest_lookup_api_reservations_guest_lookup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestReservationLookupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations/guest/cancel": {
+      "post": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Guest Cancel",
+        "operationId": "guest_cancel_api_reservations_guest_cancel_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestReservationLookupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations/{reservation_no}": {
+      "get": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Get Reservation",
+        "operationId": "get_reservation_api_reservations__reservation_no__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_no",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservation No"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservations/{reservation_no}/cancel": {
+      "post": {
+        "tags": [
+          "reservations"
+        ],
+        "summary": "Cancel Reservation",
+        "operationId": "cancel_reservation_api_reservations__reservation_no__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reservation_no",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservation No"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inquiries": {
+      "post": {
+        "tags": [
+          "inquiries"
+        ],
+        "summary": "Create Inquiry",
+        "operationId": "create_inquiry_api_inquiries_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InquiryCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InquiryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/inquiries/guest/lookup": {
+      "post": {
+        "tags": [
+          "inquiries"
+        ],
+        "summary": "Guest Inquiry Lookup",
+        "operationId": "guest_inquiry_lookup_api_inquiries_guest_lookup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestInquiryLookupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InquiryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/recommended-routes": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "summary": "Get Recommended Routes",
+        "operationId": "get_recommended_routes_api_me_recommended_routes_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 5,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteRecommendation"
+                  },
+                  "title": "Response Get Recommended Routes Api Me Recommended Routes Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "summary": "Get Me",
+        "operationId": "get_me_api_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/me/points": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "summary": "Get My Points",
+        "operationId": "get_my_points_api_me_points_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberPointResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/reservations": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "summary": "Get My Reservations",
+        "operationId": "get_my_reservations_api_me_reservations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservationResponse"
+                  },
+                  "title": "Response Get My Reservations Api Me Reservations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/inquiries": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "summary": "Get My Inquiries",
+        "operationId": "get_my_inquiries_api_me_inquiries_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InquiryResponse"
+                  },
+                  "title": "Response Get My Inquiries Api Me Inquiries Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/reservations": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Reservations",
+        "operationId": "get_reservations_api_admin_reservations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "member_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Member Id"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "확정",
+                    "취소"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Keyword"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/summary": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Summary",
+        "operationId": "get_summary_api_admin_summary_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSummaryResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/admin/members": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Members",
+        "operationId": "get_members_api_admin_members_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Keyword"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "일반",
+                    "관리자"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Role"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberResponse"
+                  },
+                  "title": "Response Get Members Api Admin Members Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/members/{member_id}": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Member",
+        "operationId": "get_member_api_admin_members__member_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Member Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/flights": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Flights",
+        "operationId": "get_flights_api_admin_flights_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "예정",
+                    "지연",
+                    "결항",
+                    "완료"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Create Flight",
+        "operationId": "create_flight_api_admin_flights_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/flights/{flight_id}": {
+      "patch": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update Flight",
+        "operationId": "update_flight_api_admin_flights__flight_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "flight_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Flight Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/flights/{flight_id}/seats": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Flight Seats",
+        "operationId": "get_flight_seats_api_admin_flights__flight_id__seats_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "flight_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Flight Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeatListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Create Flight Seats",
+        "operationId": "create_flight_seats_api_admin_flights__flight_id__seats_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "flight_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Flight Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeatBulkCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeatListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/promotions": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Promotions",
+        "operationId": "get_promotions_api_admin_promotions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PromotionResponse"
+                  },
+                  "title": "Response Get Promotions Api Admin Promotions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Create Promotion",
+        "operationId": "create_promotion_api_admin_promotions_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromotionCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromotionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/promotions/{promotion_id}": {
+      "patch": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update Promotion",
+        "operationId": "update_promotion_api_admin_promotions__promotion_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "promotion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Promotion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromotionUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromotionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Delete Promotion",
+        "operationId": "delete_promotion_api_admin_promotions__promotion_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "promotion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Promotion Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/inquiries": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Inquiries",
+        "operationId": "get_inquiries_api_admin_inquiries_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reply_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "답변대기",
+                    "답변완료"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reply Status"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InquiryResponse"
+                  },
+                  "title": "Response Get Inquiries Api Admin Inquiries Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/inquiries/{inquiry_id}": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Inquiry",
+        "operationId": "get_inquiry_api_admin_inquiries__inquiry_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "inquiry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Inquiry Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InquiryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/inquiries/{inquiry_id}/reply": {
+      "patch": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Reply Inquiry",
+        "operationId": "reply_inquiry_api_admin_inquiries__inquiry_id__reply_patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "inquiry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Inquiry Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InquiryReplyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InquiryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdminSummaryResponse": {
+        "properties": {
+          "members": {
+            "type": "integer",
+            "title": "Members"
+          },
+          "flights": {
+            "type": "integer",
+            "title": "Flights"
+          },
+          "confirmed_reservations": {
+            "type": "integer",
+            "title": "Confirmed Reservations"
+          },
+          "pending_inquiries": {
+            "type": "integer",
+            "title": "Pending Inquiries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "members",
+          "flights",
+          "confirmed_reservations",
+          "pending_inquiries"
+        ],
+        "title": "AdminSummaryResponse"
+      },
+      "AirlineListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "airlines": {
+            "items": {
+              "$ref": "#/components/schemas/AirlineResponse"
+            },
+            "type": "array",
+            "title": "Airlines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "airlines"
+        ],
+        "title": "AirlineListResponse"
+      },
+      "AirlineResponse": {
+        "properties": {
+          "airline_id": {
+            "type": "integer",
+            "title": "Airline Id"
+          },
+          "name_ko": {
+            "type": "string",
+            "title": "Name Ko"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "iata_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iata Code"
+          },
+          "icao_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icao Code"
+          },
+          "country": {
+            "type": "string",
+            "title": "Country"
+          }
+        },
+        "type": "object",
+        "required": [
+          "airline_id",
+          "name_ko",
+          "name_en",
+          "iata_code",
+          "icao_code",
+          "country"
+        ],
+        "title": "AirlineResponse"
+      },
+      "AirportListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "airports": {
+            "items": {
+              "$ref": "#/components/schemas/AirportResponse"
+            },
+            "type": "array",
+            "title": "Airports"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "airports"
+        ],
+        "title": "AirportListResponse"
+      },
+      "AirportResponse": {
+        "properties": {
+          "airport_id": {
+            "type": "integer",
+            "title": "Airport Id"
+          },
+          "name_ko": {
+            "type": "string",
+            "title": "Name Ko"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "iata_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iata Code"
+          },
+          "icao_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icao Code"
+          },
+          "country": {
+            "type": "string",
+            "title": "Country"
+          },
+          "city": {
+            "type": "string",
+            "title": "City"
+          }
+        },
+        "type": "object",
+        "required": [
+          "airport_id",
+          "name_ko",
+          "name_en",
+          "iata_code",
+          "icao_code",
+          "country",
+          "city"
+        ],
+        "title": "AirportResponse"
+      },
+      "ChatContext": {
+        "properties": {
+          "searches": {
+            "items": {
+              "$ref": "#/components/schemas/SearchSnapshot"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Searches"
+          },
+          "pending_field": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "departure",
+                  "arrival",
+                  "date",
+                  "return_date",
+                  "airline"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Field"
+          },
+          "pending_options": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Pending Options"
+          },
+          "pending_offer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "change_search",
+                  "base_price_search",
+                  "confirm_time"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Offer"
+          },
+          "pending_search": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SearchSnapshot"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ChatContext"
+      },
+      "ChatHistoryMessage": {
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "title": "ChatHistoryMessage"
+      },
+      "ChatRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 20
+          },
+          "history": {
+            "items": {
+              "$ref": "#/components/schemas/ChatHistoryMessage"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "History"
+          },
+          "context": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChatContext"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "ChatRequest"
+      },
+      "ChatResponse": {
+        "properties": {
+          "reset_search": {
+            "type": "boolean",
+            "title": "Reset Search",
+            "default": false
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "needs_clarification",
+              "unsupported"
+            ],
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "topics": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "flights",
+                "promotions",
+                "grades",
+                "popular_routes",
+                "frequent_routes",
+                "inquiry_guide"
+              ]
+            },
+            "type": "array",
+            "title": "Topics"
+          },
+          "interpreted_conditions": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Interpreted Conditions"
+          },
+          "clarification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Clarification"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count",
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "has_more": {
+            "type": "boolean",
+            "title": "Has More",
+            "default": false
+          },
+          "flights": {
+            "items": {
+              "$ref": "#/components/schemas/FlightResponse"
+            },
+            "type": "array",
+            "title": "Flights"
+          },
+          "round_trips": {
+            "items": {
+              "$ref": "#/components/schemas/RoundTripResponse"
+            },
+            "type": "array",
+            "title": "Round Trips"
+          },
+          "promotions": {
+            "items": {
+              "$ref": "#/components/schemas/PromotionResponse"
+            },
+            "type": "array",
+            "title": "Promotions"
+          },
+          "grades": {
+            "items": {
+              "$ref": "#/components/schemas/GradeResponse"
+            },
+            "type": "array",
+            "title": "Grades"
+          },
+          "destinations": {
+            "items": {
+              "$ref": "#/components/schemas/AirportResponse"
+            },
+            "type": "array",
+            "title": "Destinations"
+          },
+          "popular_routes": {
+            "items": {
+              "$ref": "#/components/schemas/RouteRecommendation"
+            },
+            "type": "array",
+            "title": "Popular Routes"
+          },
+          "frequent_routes": {
+            "items": {
+              "$ref": "#/components/schemas/RouteRecommendation"
+            },
+            "type": "array",
+            "title": "Frequent Routes"
+          },
+          "navigation": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "inquiry_create",
+                "login"
+              ]
+            },
+            "type": "array",
+            "title": "Navigation"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ChatContext"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "status",
+          "message",
+          "topics",
+          "limit"
+        ],
+        "title": "ChatResponse"
+      },
+      "Clarification": {
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field"
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/ClarificationOption"
+            },
+            "type": "array",
+            "title": "Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "prompt"
+        ],
+        "title": "Clarification"
+      },
+      "ClarificationOption": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "value"
+        ],
+        "title": "ClarificationOption"
+      },
+      "FlightConditions": {
+        "properties": {
+          "departure": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure"
+          },
+          "arrival": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          },
+          "trip_type": {
+            "type": "string",
+            "enum": [
+              "one_way",
+              "round_trip"
+            ],
+            "title": "Trip Type",
+            "default": "one_way"
+          },
+          "return_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date"
+          },
+          "return_date_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date From"
+          },
+          "return_date_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date To"
+          },
+          "airline": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airline"
+          },
+          "exclude_airlines": {
+            "items": {
+              "type": "string",
+              "maxLength": 100,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Exclude Airlines"
+          },
+          "min_price": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Price"
+          },
+          "max_price": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Price"
+          },
+          "seat_class": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "이코노미",
+                  "비즈니스",
+                  "퍼스트"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seat Class"
+          },
+          "departure_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure From"
+          },
+          "departure_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure To"
+          },
+          "arrival_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival From"
+          },
+          "arrival_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival To"
+          },
+          "return_departure_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Departure From"
+          },
+          "return_departure_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Departure To"
+          },
+          "return_arrival_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Arrival From"
+          },
+          "return_arrival_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Arrival To"
+          },
+          "sort_by": {
+            "type": "string",
+            "enum": [
+              "departure_at",
+              "arrival_at",
+              "price",
+              "return_departure_at"
+            ],
+            "title": "Sort By",
+            "default": "departure_at"
+          },
+          "sort_order": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "title": "Sort Order",
+            "default": "asc"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "FlightConditions"
+      },
+      "FlightCreateRequest": {
+        "properties": {
+          "airline_id": {
+            "type": "integer",
+            "title": "Airline Id"
+          },
+          "departure_airport_id": {
+            "type": "integer",
+            "title": "Departure Airport Id"
+          },
+          "arrival_airport_id": {
+            "type": "integer",
+            "title": "Arrival Airport Id"
+          },
+          "flight_status": {
+            "type": "string",
+            "enum": [
+              "예정",
+              "지연",
+              "결항",
+              "완료"
+            ],
+            "title": "Flight Status",
+            "default": "예정"
+          },
+          "departure_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Departure At"
+          },
+          "arrival_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Arrival At"
+          },
+          "base_price": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Base Price"
+          }
+        },
+        "type": "object",
+        "required": [
+          "airline_id",
+          "departure_airport_id",
+          "arrival_airport_id",
+          "departure_at",
+          "arrival_at",
+          "base_price"
+        ],
+        "title": "FlightCreateRequest"
+      },
+      "FlightListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "flights": {
+            "items": {
+              "$ref": "#/components/schemas/FlightResponse"
+            },
+            "type": "array",
+            "title": "Flights"
+          },
+          "available_airlines": {
+            "items": {
+              "$ref": "#/components/schemas/SimpleAirline"
+            },
+            "type": "array",
+            "title": "Available Airlines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "total",
+          "limit",
+          "offset",
+          "flights"
+        ],
+        "title": "FlightListResponse"
+      },
+      "FlightResponse": {
+        "properties": {
+          "flight_id": {
+            "type": "integer",
+            "title": "Flight Id"
+          },
+          "airline": {
+            "$ref": "#/components/schemas/SimpleAirline"
+          },
+          "departure_airport": {
+            "$ref": "#/components/schemas/SimpleAirport"
+          },
+          "arrival_airport": {
+            "$ref": "#/components/schemas/SimpleAirport"
+          },
+          "flight_status": {
+            "type": "string",
+            "title": "Flight Status"
+          },
+          "departure_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Departure At"
+          },
+          "arrival_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Arrival At"
+          },
+          "base_price": {
+            "type": "integer",
+            "title": "Base Price"
+          },
+          "remaining_seats": {
+            "type": "integer",
+            "title": "Remaining Seats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "flight_id",
+          "airline",
+          "departure_airport",
+          "arrival_airport",
+          "flight_status",
+          "departure_at",
+          "arrival_at",
+          "base_price",
+          "remaining_seats"
+        ],
+        "title": "FlightResponse"
+      },
+      "FlightUpdateRequest": {
+        "properties": {
+          "flight_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "예정",
+                  "지연",
+                  "결항",
+                  "완료"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flight Status"
+          },
+          "departure_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure At"
+          },
+          "arrival_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival At"
+          },
+          "base_price": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Price"
+          }
+        },
+        "type": "object",
+        "title": "FlightUpdateRequest"
+      },
+      "GradeResponse": {
+        "properties": {
+          "grade_code": {
+            "type": "string",
+            "title": "Grade Code"
+          },
+          "grade_name": {
+            "type": "string",
+            "title": "Grade Name"
+          },
+          "upgrade_requirement": {
+            "type": "integer",
+            "title": "Upgrade Requirement"
+          },
+          "point_rate": {
+            "type": "string",
+            "title": "Point Rate"
+          }
+        },
+        "type": "object",
+        "required": [
+          "grade_code",
+          "grade_name",
+          "upgrade_requirement",
+          "point_rate"
+        ],
+        "title": "GradeResponse"
+      },
+      "GuestInquiryLookupRequest": {
+        "properties": {
+          "inquiry_id": {
+            "type": "integer",
+            "title": "Inquiry Id"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "inquiry_id",
+          "password"
+        ],
+        "title": "GuestInquiryLookupRequest"
+      },
+      "GuestReservationLookupRequest": {
+        "properties": {
+          "reservation_no": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Reservation No"
+          },
+          "booker_email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3,
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "title": "Booker Email"
+          },
+          "booker_phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Booker Phone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reservation_no",
+          "booker_email",
+          "booker_phone"
+        ],
+        "title": "GuestReservationLookupRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InquiryCreate": {
+        "properties": {
+          "reservation_no": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reservation No"
+          },
+          "author_name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Author Name"
+          },
+          "author_phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Author Phone"
+          },
+          "inquiry_password": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inquiry Password"
+          },
+          "subject": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Subject"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "type": "object",
+        "required": [
+          "author_name",
+          "author_phone",
+          "subject",
+          "content"
+        ],
+        "title": "InquiryCreate"
+      },
+      "InquiryReplyRequest": {
+        "properties": {
+          "admin_reply": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Admin Reply"
+          }
+        },
+        "type": "object",
+        "required": [
+          "admin_reply"
+        ],
+        "title": "InquiryReplyRequest"
+      },
+      "InquiryResponse": {
+        "properties": {
+          "inquiry_id": {
+            "type": "integer",
+            "title": "Inquiry Id"
+          },
+          "member_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Id"
+          },
+          "reservation_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reservation No"
+          },
+          "author_name": {
+            "type": "string",
+            "title": "Author Name"
+          },
+          "author_phone": {
+            "type": "string",
+            "title": "Author Phone"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "admin_reply": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Admin Reply"
+          },
+          "reply_status": {
+            "type": "string",
+            "title": "Reply Status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "inquiry_id",
+          "member_id",
+          "reservation_no",
+          "author_name",
+          "author_phone",
+          "subject",
+          "content",
+          "admin_reply",
+          "reply_status",
+          "created_at"
+        ],
+        "title": "InquiryResponse"
+      },
+      "LoginRequest": {
+        "properties": {
+          "member_id": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Member Id"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_id",
+          "password"
+        ],
+        "title": "LoginRequest"
+      },
+      "MemberPointResponse": {
+        "properties": {
+          "member_id": {
+            "type": "string",
+            "title": "Member Id"
+          },
+          "point_balance": {
+            "type": "integer",
+            "title": "Point Balance"
+          },
+          "history": {
+            "items": {
+              "$ref": "#/components/schemas/PointHistoryItem"
+            },
+            "type": "array",
+            "title": "History"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_id",
+          "point_balance",
+          "history"
+        ],
+        "title": "MemberPointResponse"
+      },
+      "MemberResponse": {
+        "properties": {
+          "member_id": {
+            "type": "string",
+            "title": "Member Id"
+          },
+          "grade_code": {
+            "type": "string",
+            "title": "Grade Code"
+          },
+          "grade_name": {
+            "type": "string",
+            "title": "Grade Name"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Birth Date"
+          },
+          "gender": {
+            "type": "string",
+            "title": "Gender"
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone"
+          },
+          "point_balance": {
+            "type": "integer",
+            "title": "Point Balance"
+          },
+          "role_type": {
+            "type": "string",
+            "title": "Role Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_id",
+          "grade_code",
+          "grade_name",
+          "name",
+          "birth_date",
+          "gender",
+          "phone",
+          "point_balance",
+          "role_type"
+        ],
+        "title": "MemberResponse"
+      },
+      "MessageResponse": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "MessageResponse"
+      },
+      "PassengerCreate": {
+        "properties": {
+          "seat_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Seat Id"
+          },
+          "passenger_name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Passenger Name"
+          },
+          "passenger_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Passenger Birth Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seat_id",
+          "passenger_name",
+          "passenger_birth_date"
+        ],
+        "title": "PassengerCreate"
+      },
+      "PointHistoryItem": {
+        "properties": {
+          "point_history_id": {
+            "type": "integer",
+            "title": "Point History Id"
+          },
+          "reservation_no": {
+            "type": "string",
+            "title": "Reservation No"
+          },
+          "change_type": {
+            "type": "string",
+            "title": "Change Type"
+          },
+          "change_amount": {
+            "type": "integer",
+            "title": "Change Amount"
+          },
+          "balance_after": {
+            "type": "integer",
+            "title": "Balance After"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Occurred At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "point_history_id",
+          "reservation_no",
+          "change_type",
+          "change_amount",
+          "balance_after",
+          "occurred_at"
+        ],
+        "title": "PointHistoryItem"
+      },
+      "PromotionCreateRequest": {
+        "properties": {
+          "promotion_name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Promotion Name"
+          },
+          "discount_rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Discount Rate"
+          },
+          "start_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start At"
+          },
+          "end_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "End At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "promotion_name",
+          "discount_rate",
+          "start_at",
+          "end_at"
+        ],
+        "title": "PromotionCreateRequest"
+      },
+      "PromotionResponse": {
+        "properties": {
+          "promotion_id": {
+            "type": "integer",
+            "title": "Promotion Id"
+          },
+          "promotion_name": {
+            "type": "string",
+            "title": "Promotion Name"
+          },
+          "discount_rate": {
+            "type": "string",
+            "title": "Discount Rate"
+          },
+          "start_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start At"
+          },
+          "end_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "End At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "promotion_id",
+          "promotion_name",
+          "discount_rate",
+          "start_at",
+          "end_at"
+        ],
+        "title": "PromotionResponse"
+      },
+      "PromotionUpdateRequest": {
+        "properties": {
+          "promotion_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Name"
+          },
+          "discount_rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discount Rate"
+          },
+          "start_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start At"
+          },
+          "end_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End At"
+          }
+        },
+        "type": "object",
+        "title": "PromotionUpdateRequest"
+      },
+      "RegisterRequest": {
+        "properties": {
+          "member_id": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 4,
+            "title": "Member Id"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 8,
+            "title": "Password"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Birth Date"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "M",
+              "F"
+            ],
+            "title": "Gender"
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Phone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_id",
+          "password",
+          "name",
+          "birth_date",
+          "gender",
+          "phone"
+        ],
+        "title": "RegisterRequest"
+      },
+      "ReservationCreate": {
+        "properties": {
+          "promotion_id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Id"
+          },
+          "booker_name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Booker Name"
+          },
+          "booker_phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Booker Phone"
+          },
+          "booker_email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3,
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "title": "Booker Email"
+          },
+          "booker_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booker Birth Date"
+          },
+          "used_points": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Used Points",
+            "default": 0
+          },
+          "passengers": {
+            "items": {
+              "$ref": "#/components/schemas/PassengerCreate"
+            },
+            "type": "array",
+            "maxItems": 9,
+            "minItems": 1,
+            "title": "Passengers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "booker_name",
+          "booker_phone",
+          "booker_email",
+          "booker_birth_date",
+          "passengers"
+        ],
+        "title": "ReservationCreate"
+      },
+      "ReservationCreatedResponse": {
+        "properties": {
+          "reservation_no": {
+            "type": "string",
+            "title": "Reservation No"
+          },
+          "final_amount": {
+            "type": "integer",
+            "title": "Final Amount"
+          },
+          "earned_points": {
+            "type": "integer",
+            "title": "Earned Points"
+          },
+          "reservation_status": {
+            "type": "string",
+            "title": "Reservation Status"
+          },
+          "trip_type": {
+            "type": "string",
+            "enum": [
+              "one_way",
+              "round_trip"
+            ],
+            "title": "Trip Type",
+            "default": "one_way"
+          },
+          "idempotent_replay": {
+            "type": "boolean",
+            "title": "Idempotent Replay",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "reservation_no",
+          "final_amount",
+          "earned_points",
+          "reservation_status"
+        ],
+        "title": "ReservationCreatedResponse"
+      },
+      "ReservationDetailResponse": {
+        "properties": {
+          "reservation_detail_id": {
+            "type": "integer",
+            "title": "Reservation Detail Id"
+          },
+          "seat_id": {
+            "type": "integer",
+            "title": "Seat Id"
+          },
+          "flight_id": {
+            "type": "integer",
+            "title": "Flight Id"
+          },
+          "seat_no": {
+            "type": "string",
+            "title": "Seat No"
+          },
+          "seat_class": {
+            "type": "string",
+            "title": "Seat Class"
+          },
+          "passenger_name": {
+            "type": "string",
+            "title": "Passenger Name"
+          },
+          "passenger_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Passenger Birth Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reservation_detail_id",
+          "seat_id",
+          "flight_id",
+          "seat_no",
+          "seat_class",
+          "passenger_name",
+          "passenger_birth_date"
+        ],
+        "title": "ReservationDetailResponse"
+      },
+      "ReservationListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "reservations": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationResponse"
+            },
+            "type": "array",
+            "title": "Reservations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "total",
+          "limit",
+          "offset",
+          "reservations"
+        ],
+        "title": "ReservationListResponse"
+      },
+      "ReservationResponse": {
+        "properties": {
+          "reservation_no": {
+            "type": "string",
+            "title": "Reservation No"
+          },
+          "member_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Id"
+          },
+          "promotion_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Id"
+          },
+          "booker_name": {
+            "type": "string",
+            "title": "Booker Name"
+          },
+          "booker_phone": {
+            "type": "string",
+            "title": "Booker Phone"
+          },
+          "booker_email": {
+            "type": "string",
+            "title": "Booker Email"
+          },
+          "booker_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booker Birth Date"
+          },
+          "used_points": {
+            "type": "integer",
+            "title": "Used Points"
+          },
+          "final_amount": {
+            "type": "integer",
+            "title": "Final Amount"
+          },
+          "reserved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Reserved At"
+          },
+          "reservation_status": {
+            "type": "string",
+            "title": "Reservation Status"
+          },
+          "flight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FlightResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "trip_type": {
+            "type": "string",
+            "enum": [
+              "one_way",
+              "round_trip"
+            ],
+            "title": "Trip Type"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationSegmentResponse"
+            },
+            "type": "array",
+            "title": "Segments"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationDetailResponse"
+            },
+            "type": "array",
+            "title": "Details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reservation_no",
+          "member_id",
+          "promotion_id",
+          "booker_name",
+          "booker_phone",
+          "booker_email",
+          "booker_birth_date",
+          "used_points",
+          "final_amount",
+          "reserved_at",
+          "reservation_status",
+          "flight",
+          "trip_type",
+          "segments",
+          "details"
+        ],
+        "title": "ReservationResponse"
+      },
+      "ReservationSegmentResponse": {
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "outbound",
+              "inbound"
+            ],
+            "title": "Direction"
+          },
+          "flight": {
+            "$ref": "#/components/schemas/FlightResponse"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationDetailResponse"
+            },
+            "type": "array",
+            "title": "Details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "direction",
+          "flight",
+          "details"
+        ],
+        "title": "ReservationSegmentResponse"
+      },
+      "RoundTripListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "round_trips": {
+            "items": {
+              "$ref": "#/components/schemas/RoundTripResponse"
+            },
+            "type": "array",
+            "title": "Round Trips"
+          },
+          "available_airlines": {
+            "items": {
+              "$ref": "#/components/schemas/SimpleAirline"
+            },
+            "type": "array",
+            "title": "Available Airlines"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "total",
+          "limit",
+          "offset",
+          "round_trips"
+        ],
+        "title": "RoundTripListResponse"
+      },
+      "RoundTripPassengerCreate": {
+        "properties": {
+          "outbound_seat_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Outbound Seat Id"
+          },
+          "inbound_seat_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Inbound Seat Id"
+          },
+          "passenger_name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Passenger Name"
+          },
+          "passenger_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Passenger Birth Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outbound_seat_id",
+          "inbound_seat_id",
+          "passenger_name",
+          "passenger_birth_date"
+        ],
+        "title": "RoundTripPassengerCreate"
+      },
+      "RoundTripReservationCreate": {
+        "properties": {
+          "promotion_id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Id"
+          },
+          "booker_name": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Booker Name"
+          },
+          "booker_phone": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Booker Phone"
+          },
+          "booker_email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3,
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "title": "Booker Email"
+          },
+          "booker_birth_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booker Birth Date"
+          },
+          "used_points": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Used Points",
+            "default": 0
+          },
+          "passengers": {
+            "items": {
+              "$ref": "#/components/schemas/RoundTripPassengerCreate"
+            },
+            "type": "array",
+            "maxItems": 9,
+            "minItems": 1,
+            "title": "Passengers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "booker_name",
+          "booker_phone",
+          "booker_email",
+          "booker_birth_date",
+          "passengers"
+        ],
+        "title": "RoundTripReservationCreate"
+      },
+      "RoundTripResponse": {
+        "properties": {
+          "outbound": {
+            "$ref": "#/components/schemas/FlightResponse"
+          },
+          "inbound": {
+            "$ref": "#/components/schemas/FlightResponse"
+          },
+          "total_base_price": {
+            "type": "integer",
+            "title": "Total Base Price"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outbound",
+          "inbound",
+          "total_base_price"
+        ],
+        "title": "RoundTripResponse"
+      },
+      "RouteRecommendation": {
+        "properties": {
+          "departure_airport": {
+            "$ref": "#/components/schemas/SimpleAirport"
+          },
+          "arrival_airport": {
+            "$ref": "#/components/schemas/SimpleAirport"
+          },
+          "reservation_count": {
+            "type": "integer",
+            "title": "Reservation Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "departure_airport",
+          "arrival_airport",
+          "reservation_count"
+        ],
+        "title": "RouteRecommendation"
+      },
+      "SearchSnapshot": {
+        "properties": {
+          "conditions": {
+            "$ref": "#/components/schemas/FlightConditions"
+          },
+          "max_results": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 50.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Results"
+          },
+          "result_kind": {
+            "type": "string",
+            "enum": [
+              "flights",
+              "destinations"
+            ],
+            "title": "Result Kind",
+            "default": "flights"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conditions"
+        ],
+        "title": "SearchSnapshot"
+      },
+      "SeatBulkCreateRequest": {
+        "properties": {
+          "seats": {
+            "items": {
+              "$ref": "#/components/schemas/SeatCreateItem"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Seats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seats"
+        ],
+        "title": "SeatBulkCreateRequest"
+      },
+      "SeatCreateItem": {
+        "properties": {
+          "seat_no": {
+            "type": "string",
+            "maxLength": 5,
+            "minLength": 1,
+            "pattern": "^[0-9]{1,3}[A-Za-z]$",
+            "title": "Seat No"
+          },
+          "seat_class": {
+            "type": "string",
+            "enum": [
+              "이코노미",
+              "비즈니스",
+              "퍼스트"
+            ],
+            "title": "Seat Class"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seat_no",
+          "seat_class"
+        ],
+        "title": "SeatCreateItem"
+      },
+      "SeatListResponse": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "seats": {
+            "items": {
+              "$ref": "#/components/schemas/SeatResponse"
+            },
+            "type": "array",
+            "title": "Seats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count",
+          "seats"
+        ],
+        "title": "SeatListResponse"
+      },
+      "SeatResponse": {
+        "properties": {
+          "seat_id": {
+            "type": "integer",
+            "title": "Seat Id"
+          },
+          "flight_id": {
+            "type": "integer",
+            "title": "Flight Id"
+          },
+          "seat_no": {
+            "type": "string",
+            "title": "Seat No"
+          },
+          "seat_class": {
+            "type": "string",
+            "title": "Seat Class"
+          },
+          "is_available": {
+            "type": "boolean",
+            "title": "Is Available"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seat_id",
+          "flight_id",
+          "seat_no",
+          "seat_class",
+          "is_available"
+        ],
+        "title": "SeatResponse"
+      },
+      "SimpleAirline": {
+        "properties": {
+          "airline_id": {
+            "type": "integer",
+            "title": "Airline Id"
+          },
+          "name_ko": {
+            "type": "string",
+            "title": "Name Ko"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "iata_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iata Code"
+          },
+          "icao_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icao Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "airline_id",
+          "name_ko",
+          "name_en",
+          "iata_code",
+          "icao_code"
+        ],
+        "title": "SimpleAirline"
+      },
+      "SimpleAirport": {
+        "properties": {
+          "airport_id": {
+            "type": "integer",
+            "title": "Airport Id"
+          },
+          "name_ko": {
+            "type": "string",
+            "title": "Name Ko"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "iata_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iata Code"
+          },
+          "icao_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icao Code"
+          },
+          "city": {
+            "type": "string",
+            "title": "City"
+          },
+          "country": {
+            "type": "string",
+            "title": "Country"
+          }
+        },
+        "type": "object",
+        "required": [
+          "airport_id",
+          "name_ko",
+          "name_en",
+          "iata_code",
+          "icao_code",
+          "city",
+          "country"
+        ],
+        "title": "SimpleAirport"
+      },
+      "TokenResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "expires_in": {
+            "type": "integer",
+            "title": "Expires In"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "expires_in"
+        ],
+        "title": "TokenResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

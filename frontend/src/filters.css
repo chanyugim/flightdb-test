@@ -1,0 +1,74 @@
+.filter-dialog {
+  width: min(480px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  color: var(--text);
+}
+.filter-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: filter-appear 220ms ease-out;
+}
+.filter-dialog[open]::backdrop {
+  animation: filter-backdrop-appear 220ms ease-out;
+}
+@keyframes filter-appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes filter-backdrop-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .filter-dialog[open], .filter-dialog[open]::backdrop { animation: none; }
+}
+.flight-time-filters {
+  min-width: 0;
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.flight-time-filters legend {
+  padding: 0 6px;
+  font-weight: 700;
+}
+.flight-time-filters input[type="date"] {
+  min-width: 0;
+  max-width: 100%;
+  font-size: 16px;
+}
+.filter-dialog::backdrop {
+  background: rgb(5 32 60 / 48%);
+}
+.filter-dialog-header,
+.filter-dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  flex-shrink: 0;
+}
+.filter-dialog-header {
+  border-bottom: 1px solid var(--border);
+}
+.filter-dialog-header h2 {
+  margin: 0;
+}
+.filter-dialog-content {
+  padding: 16px;
+  overflow-y: auto;
+}
+.filter-dialog-footer {
+  border-top: 1px solid var(--border);
+}
+.filter-dialog-footer button {
+  flex-shrink: 0;
+}
+.filter-dialog .filter-apply {
+  display: none;
+}

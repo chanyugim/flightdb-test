@@ -1,0 +1,121 @@
+.container.auth-page {
+  max-width: 600px;
+  padding-top: 56px;
+  padding-bottom: 80px;
+}
+.auth-layout {
+  background: white;
+  border-top: 4px solid var(--teal);
+}
+.auth-content {
+  padding: 40px 48px;
+  min-width: 0;
+}
+.auth-nav {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+.auth-nav a {
+  padding: 0 0 12px;
+  color: var(--muted);
+}
+.auth-nav a.active {
+  border-bottom: 3px solid var(--teal);
+  color: var(--navy);
+  font-weight: 700;
+}
+.inquiry-tabs button {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 12px;
+  color: var(--muted);
+}
+.inquiry-tabs button[aria-selected="true"] {
+  border-bottom-color: var(--teal);
+  color: var(--navy);
+  font-weight: 700;
+}
+.form-sheet > .inquiry-panel {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.auth-content h1 {
+  font-size: 28px;
+  margin-bottom: 28px;
+}
+.auth-content .form-row {
+  margin-bottom: 20px;
+}
+.auth-content input,
+.auth-content select {
+  border-radius: 3px;
+  min-height: 46px;
+}
+.auth-content .btn-primary {
+  min-height: 48px;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+.auth-password {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.auth-password input {
+  border: 0;
+  min-width: 0;
+  flex: 1;
+}
+.auth-password button {
+  border: 0;
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.auth-guest-link {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.container.form-page-wide {
+  max-width: 760px;
+}
+.form-sheet {
+  background: white;
+  border-top: 4px solid var(--teal);
+}
+.form-sheet > section + section {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 32px;
+}
+.form-sheet h2 {
+  margin-top: 0;
+}
+.form-sheet textarea {
+  min-height: 160px;
+  border-radius: 3px;
+}
+@media (max-width: 600px) {
+  .container.auth-page {
+    padding-top: 28px;
+    padding-bottom: 48px;
+  }
+  .auth-content {
+    padding: 28px 22px;
+  }
+  .auth-content h1 {
+    font-size: 24px;
+  }
+}

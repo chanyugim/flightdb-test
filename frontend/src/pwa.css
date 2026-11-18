@@ -1,0 +1,42 @@
+.pwa-status {
+  font-size: 13px;
+  background: var(--teal-soft);
+  color: var(--navy);
+  word-break: keep-all;
+}
+.pwa-status > p {
+  margin: 0;
+  padding: 12px 20px;
+  text-align: center;
+}
+.pwa-update {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+}
+.pwa-update span {
+  max-width: 640px;
+}
+.pwa-update button {
+  font-size: 12px;
+  padding: 6px 10px;
+}
+.pwa-install {
+  margin-top: 10px;
+}
+.pwa-install button {
+  color: var(--muted);
+  border: 0;
+  padding: 4px;
+  background: transparent;
+  font-size: 12px;
+  text-decoration: underline;
+}
+.pwa-install p {
+  margin: 8px auto 0;
+  max-width: 460px;
+  line-height: 1.6;
+}
